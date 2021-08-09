@@ -2,16 +2,18 @@ import os
 import random
 import shutil
 import math
+import time
 
 def is_image_file(dir_path, file):
     if os.path.isfile(os.path.join(dir_path, file)):
         splitted = file.split('.')
-        if splitted[-1].lower() in ['jpg', 'png', 'svg', 'gif']:
+        if splitted[-1].lower() in ['jpg', 'png', 'svg', 'gif', 'jpeg']:
             return True
         return False
     return False
 
 
+printer = lambda name : print(f'{name} has been removed.')
 
 def split_in_half(dir_path, backup_path):
     images = [f for f in os.listdir(dir_path) if is_image_file(dir_path, f)]
@@ -27,4 +29,7 @@ def split_in_half(dir_path, backup_path):
         for index in random_indeces:
             if not os.path.isfile(os.path.join(backup_path, images[index])):
                 shutil.move(os.path.join(dir_path, images[index]), os.path.join(backup_path, images[index]))
+                time.sleep(2)
+                printer(images[index])
+
         return True
